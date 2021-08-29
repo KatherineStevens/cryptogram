@@ -1,9 +1,9 @@
-#Cryptogram
+# Cryptogram
 
-##Creating and Decrypting
+## Creating and Decrypting
 This code can create a cryptogram (monoalphabetic substitution cipher) from a given text file. It will solve the cryptogram given a training text. The length that these texts should be is not exact. For my own tests, I used training text ranging from about 600 - 85,000 words, and the cipher text should be longer than about 65 words.
 
-##Writing the Code
+## Writing the Code
 While visiting my parents, I sat with my family as all of us worked on our copy of the cryptogram from the newspaper. Discussing with my partner the technique I used to solve this particular puzzle, I realized that there was a distinct and repeating pattern to decrypting it. For anyone who is unfamiliar, a cryptogram is a substitution cipher for which the key is a mapping from one letter in the alphabet to a single random other letter. The decryption process is as follows: With my general intuition of how often letters appear in the English language, I start by looking for the most common ones. I look for familiar pairs as well, which could be something like “-oo-” or “-ing”. As part of this preliminary scan, I also look for groupings of letters that could potentially be common words, for example “a” or “the”. I think through a few different options, I make a guess for a letter or a word, and then observe the words that begin to form. I look for whether groups of letters start to look like real words, or if a group is moving toward a non-existent word. Based on my results I either continue with the process, or move backwards and re-evaluate some letters I guessed. This process is repeated until the phrase is made up of real words.
 
 I have seen many examples of sudoku solvers coded, but I haven’t come across a cryptogram solver. My partner and I thought this would be a neat project to try out. I did some research and found that this would take some machine learning techniques, which made it even more appealing to me. I set a plan to make an algorithm to solve the puzzle. We decided to start by having my partner create the necessary classes as I worked on coding the algorithm. In this blog, I will discuss my own work on creating the decryption code. 
@@ -18,7 +18,7 @@ For pairs of letters, I needed to make a function that calculates bigram frequen
 
 <figure>
         <a href="/img/freq.png"><img src="/img/freq.png"></a>
-</figure>x
+</figure>
 
 My partner @tylovejoy made Key, Quote and Cryptogram classes. The Key class has a mapping function which returns a dictionary that randomly assigns each letter of the alphabet to a different unique letter of the alphabet. The Quote class is the uppercase version of the original quote used to create the cryptogram. The Cryptogram class has attributes Key, Quote, the string of the cryptogram itself, and an encryption function that uses the given key and quote to create the cipher. Now that I had an encryption function, I needed a decryption function that would take in as parameters a key and a cipher, and would return the decrypted text after applying that key to that cipher. 
 
@@ -28,7 +28,7 @@ The algorithm would start with an initial key guess based on single letter frequ
 
 At this point, the algorithm worked well when the cipher text was relatively long, and the training text was relatively short. To my surprise, the code would stop decrypting properly when the training text was very long. It also had issues when I tried shortening the cipher text past a certain length. I figured that the great differences when comparing counts in the training text matrix to those in the cipher text matrix may have been producing insignificant results, causing my algorithm to plateau. To resolve this, I kept the long training text, but divided all the counts of the training text matrix by the ratio between the length of the training text and the length of the cipher. This improved the decrypted text, but did not fix it completely. I realized that with this algorithm, and my desired lengths of texts, this was the best using bigrams would do, so I added a trigram function that did the same thing as the bigram function, but now would count trigram frequencies throughout a given text. With these changes, the code was able to perform successfully on smaller ciphers and a large training text. I tried tetragrams as well, however the program took much longer to run and did not noticeably improve the cipher. To continue to improve the code, I would like to try to implement common words as well. 
 
-##Sources
+## Sources
 1. https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.55.89&rep=rep1&type=pdf
 
 2. https://www.youtube.com/watch?v=pF-DzPOCeM8
