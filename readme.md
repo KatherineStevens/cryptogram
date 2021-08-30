@@ -9,18 +9,22 @@ While visiting my parents, I sat with my family as all of us worked on our copy 
 I have seen many examples of sudoku solvers coded, but I haven’t come across a cryptogram solver. My partner and I thought this would be a neat project to try out. I did some research and found that this would take some machine learning techniques, which made it even more appealing to me. I set a plan to make an algorithm to solve the puzzle. We decided to start by having my partner create the necessary classes as I worked on coding the algorithm. In this blog, I will discuss my own work on creating the decryption code. 
 
 To start, I listed all the variables and functions I expected to need to solve this. I needed a training text to teach my program from. Just like using what I know about letter frequencies to solve the newspaper cryptogram, my program needed some knowledge as well. It needed to learn how often letters should occur in English, and furthermore, how often pairs of letters occur. This is where the training text comes in. The initial guess for the key would be made by mapping the letters of the training text to those of the cipher text based on the similar single letter frequencies of each. I needed to make a function that returns the single frequencies given a text, and a function that produces an initial key guess given the single letter frequencies of the training text and cipher text. Below is a graph of the single letter frequencies of an arbitrary English sample text. It can be seen from this that spaces obviously are the most frequent, followed by “E” and “T”.
+<br>
 
 <figure>
         <a href="/img/single_freq.png"><img src="/img/single_freq.png"></a>
         <figcaption>Single Letter Frequencies</figcaption>
 </figure>
 
+<br>
 For pairs of letters, I needed to make a function that calculates bigram frequencies of a given text, and returns a matrix of those frequencies. Here, the matrix rows and columns consist of each letter in the English alphabet and space. A bigram consists of two consecutive letters or letter and space, i.e. a pairing of row and column elements. The function reads through the text, and for each occurrence of a specific row-column pair, increments that corresponding element in the return matrix by one. To explain why I chose to include the space along with the alphabet in these frequency measurements, I wanted my cryptogram to mimic the ones in the newspaper. The spaces would not be substituted and space automatically maps to space in the key. I used them, however, because I thought it would be useful to know how often letters are at the beginning and end of words, along with the frequency of pairs of letters. I used a heatmap (below) to show a visual representation of these frequencies from an arbitrary sample of English text. The hottest (most frequent) pairs are “E” and space, and space and “T”. This makes sense since “E” and “T” were the most common single frequency letters. Then the next most frequent pairs I noticed were “TH”, “HE”, “D”- space, and space -“A”. Which also makes sense since words like “the” and “and” are common. 
 
+<br>
 <figure>
         <a href="/img/freq.png"><img src="/img/freq.png"></a>
         <figcaption>Bigram Frequencies</figcaption>
 </figure>
+<br>
 
 My partner [@tylovejoy](https://github.com/tylovejoy) made Key, Quote and Cryptogram classes. The Key class has a mapping function which returns a dictionary that randomly assigns each letter of the alphabet to a different unique letter of the alphabet. The Quote class is the uppercase version of the original quote used to create the cryptogram. The Cryptogram class has attributes Key, Quote, the string of the cryptogram itself, and an encryption function that uses the given key and quote to create the cipher. Now that I had an encryption function, I needed a decryption function that would take in as parameters a key and a cipher, and would return the decrypted text after applying that key to that cipher. 
 
