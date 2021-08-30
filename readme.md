@@ -12,12 +12,14 @@ To start, I listed all the variables and functions I expected to need to solve t
 
 <figure>
         <a href="/img/single_freq.png"><img src="/img/single_freq.png"></a>
+        <figcaption>Single Letter Frequencies</figcaption>
 </figure>
 
 For pairs of letters, I needed to make a function that calculates bigram frequencies of a given text, and returns a matrix of those frequencies. Here, the matrix rows and columns consist of each letter in the English alphabet and space. A bigram consists of two consecutive letters or letter and space, i.e. a pairing of row and column elements. The function reads through the text, and for each occurrence of a specific row-column pair, increments that corresponding element in the return matrix by one. To explain why I chose to include the space along with the alphabet in these frequency measurements, I wanted my cryptogram to mimic the ones in the newspaper. The spaces would not be substituted and space automatically maps to space in the key. I used them, however, because I thought it would be useful to know how often letters are at the beginning and end of words, along with the frequency of pairs of letters. I used a heatmap (below) to show a visual representation of these frequencies from an arbitrary sample of English text. The hottest (most frequent) pairs are “E” and space, and space and “T”. This makes sense since “E” and “T” were the most common single frequency letters. Then the next most frequent pairs I noticed were “TH”, “HE”, “D”- space, and space -“A”. Which also makes sense since words like “the” and “and” are common. 
 
 <figure>
         <a href="/img/freq.png"><img src="/img/freq.png"></a>
+        <figcaption>Bigram Frequencies</figcaption>
 </figure>
 
 My partner [@tylovejoy](https://github.com/tylovejoy) made Key, Quote and Cryptogram classes. The Key class has a mapping function which returns a dictionary that randomly assigns each letter of the alphabet to a different unique letter of the alphabet. The Quote class is the uppercase version of the original quote used to create the cryptogram. The Cryptogram class has attributes Key, Quote, the string of the cryptogram itself, and an encryption function that uses the given key and quote to create the cipher. Now that I had an encryption function, I needed a decryption function that would take in as parameters a key and a cipher, and would return the decrypted text after applying that key to that cipher. 
